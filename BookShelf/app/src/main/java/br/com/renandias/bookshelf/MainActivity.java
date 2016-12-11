@@ -28,4 +28,11 @@ public class MainActivity extends AppCompatActivity {
         Intent goMyBooks = new Intent(MainActivity.this, MyBooks.class);
         startActivity(goMyBooks);
     }
+
+    @OnClick(R.id.reminders)
+    public void goReminders() {
+        Intent goReminders = new Intent(MainActivity.this, MyReminders.class);
+        startActivity(goReminders);
+    }
+
 }

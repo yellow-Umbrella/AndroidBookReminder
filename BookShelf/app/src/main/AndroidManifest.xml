@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.renandias.bookshelf">
 
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/> <!-- Permision by user to use alarms -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +18,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".MyBooks" />
-        <activity android:name=".AddBook"></activity>
+        <activity android:name=".AddBook" />
+        <activity
+            android:name=".MyReminders"
+            android:label="@string/title_activity_my_reminders"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddReminder"></activity>
+
+        <receiver android:name=".AlertReceiver"/>
     </application>
 
 </manifest>

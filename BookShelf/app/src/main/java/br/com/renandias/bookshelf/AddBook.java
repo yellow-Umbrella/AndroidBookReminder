@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.renandias.bookshelf.DataBase.BookDataBase;
+import br.com.renandias.bookshelf.DataBase.DataBase;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,8 +39,8 @@ public class AddBook extends AppCompatActivity {
 
         if(!name.isEmpty() && pages != null) {
 
-            BookDataBase bdb = new BookDataBase(this);
-            bdb.save(new Book(name, pages));
+            DataBase db = new DataBase(this);
+            db.saveBook(new Book(name, pages));
 
             Toast.makeText(this, "Book Saved", Toast.LENGTH_SHORT).show();
 
