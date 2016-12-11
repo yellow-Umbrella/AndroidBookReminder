@@ -7,19 +7,22 @@ package br.com.renandias.bookshelf.models;
 public class Reminder {
 
     private Long id;
-    private Book book;
+    private Long notifID;
+    private Long bookId;
     private String date;
 
     public Reminder() {}
 
-    public Reminder(Book book, String date) {
-        this.book = book;
+    public Reminder(Long notifId, Long bookId, String date) {
+        this.notifID = notifId;
+        this.bookId = bookId;
         this.date = date;
     }
 
-    public Reminder(Long id, Book book, String date) {
+    public Reminder(Long id, Long notifID, Long bookId, String date) {
         this.id = id;
-        this.book = book;
+        this.notifID = notifID;
+        this.bookId = bookId;
         this.date = date;
     }
 
@@ -31,12 +34,20 @@ public class Reminder {
         this.id = id;
     }
 
-    public Book getBook() {
-        return book;
+    public Long getNotifID() {
+        return notifID;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setNotifID(Long notifID) {
+        this.notifID = notifID;
+    }
+
+    public Long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public String getDate() {

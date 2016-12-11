@@ -46,7 +46,7 @@ public class MyBooks extends AppCompatActivity {
 
         Intent goAddReminder = new Intent(this, AddReminder.class);
 
-        String name = (String) parent.getAdapter().getItem(position); // don't know if it works
+        String name = (String) parent.getAdapter().getItem(position); // don't know if it works  //It does!!
         goAddReminder.putExtra("bookName", name);
         startActivity(goAddReminder);
 

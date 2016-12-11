@@ -2,6 +2,7 @@ package br.com.renandias.bookshelf;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import butterknife.OnClick;
 
 public class MyReminders extends AppCompatActivity {
 
-    @Bind(R.id.all_reminders)
+    @Bind(R.id.all_reminders_listView)
     ListView viewList;
 
     @Override
@@ -47,7 +48,7 @@ public class MyReminders extends AppCompatActivity {
 
         int i = 0;
         for(Reminder x: list)
-            bookReminderName[i++] = x.getBook().getName() + " " + x.getBook().getPages(); //null pointer exception
+            bookReminderName[i++] = String.valueOf(x.getBookId()); //null pointer exception
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, bookReminderName);
         viewList.setAdapter(adapter);
@@ -56,6 +57,7 @@ public class MyReminders extends AppCompatActivity {
     @OnClick(R.id.fab)
     public void goMyBooks() {
         Intent intent = new Intent(this, MyBooks.class);
+        startActivity(intent);
     }
 
 }

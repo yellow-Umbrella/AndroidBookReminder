@@ -29,8 +29,9 @@ public class DataBase extends SQLiteOpenHelper {
 
     //Reminder Model
     private static final int REMINDER_ID = 0;
-    private static final int REMINDER_BOOK = 1;
-    private static final int REMINDER_DATE = 2;
+    private static final int REMINDER_NOTIF = 1;
+    private static final int REMINDER_BOOK_ID = 2;
+    private static final int REMINDER_DATE = 3;
 
     public DataBase(Context context) { super(context, DATABASE_NAME, null, DATABASE_VERSION); }
 
@@ -38,17 +39,17 @@ public class DataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table book (id integer primary key, name text, pages integer)";
         db.execSQL(sql);
-        sql = "create table reminder (id integer primary key, book_id integer REFERENCES book ON DELETE CASCADE, reminder_date text)";
+        sql = "create table reminder (id integer primary key, notif_id integer, book_id integer, reminder_date text)";
         db.execSQL(sql);
     }
 
-    @Override
-    public void onOpen(SQLiteDatabase db) {
-        super.onOpen(db);
-        if(!db.isReadOnly()) {
-            db.execSQL("PRAGMA foreign_key=ON;");
-        }
-    }
+//    @Override
+//    public void onOpen(SQLiteDatabase db) {
+//        super.onOpen(db);
+//        if(!db.isReadOnly()) {
+//            db.execSQL("PRAGMA foreign_key=ON;");
+//        }
+//    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -96,7 +97,9 @@ public class DataBase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("book_id", reminder.getBook().getId());
+        values.put("id", reminder.getId());
+        values.put("notif_id", reminder.getNotifID());
+        values.put("book_id", reminder.getBookId());
         values.put("reminder_date", reminder.getDate());
 
         db.insert("reminder", null, values);
@@ -117,18 +120,18 @@ public class DataBase extends SQLiteOpenHelper {
 
             do {
 
-                sql = "select * from book where id=" + cursor.getInt(REMINDER_BOOK);
+                sql = "select * from book where id=" + cursor.getInt(REMINDER_BOOK_ID);
                 Cursor bookCursor = db.rawQuery(sql, null);
 
                 Book book;
 
-                if(bookCursor.moveToFirst()) {
+                if(bookCursor.moveToFirst()) {                                                                                      //fix it
                     book = new Book(cursor.getLong(BOOK_ID), cursor.getString(BOOK_NAME), cursor.getInt(BOOK_PAGES));
                 } else {
                     book = new Book();
                 }
 
-                list.add(new Reminder(cursor.getLong(REMINDER_ID), book, cursor.getString(REMINDER_DATE)));
+                list.add(new Reminder(cursor.getLong(REMINDER_ID), cursor.getLong(REMINDER_NOTIF), cursor.getLong(REMINDER_BOOK_ID), cursor.getString(REMINDER_DATE)));
             }while(cursor.moveToNext());
 
         }

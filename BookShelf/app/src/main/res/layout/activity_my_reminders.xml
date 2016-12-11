@@ -22,7 +22,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_my_reminders"
-        android:id="@+id/all_reminders" />
+        android:id="@+id/all_reminders_view" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
