@@ -45,10 +45,10 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/generic_book"
+        app:srcCompat="@mipmap/generic_book"
         android:layout_below="@+id/pages"
         android:layout_alignParentStart="true"
-        android:id="@+id/imageButton"
+        android:id="@+id/image_button_book"
         android:layout_above="@+id/save_button"
         android:layout_alignParentEnd="true" />
 

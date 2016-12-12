@@ -1,6 +1,6 @@
 package br.com.renandias.bookshelf.models;
 
-import br.com.renandias.bookshelf.R;
+//import br.com.renandias.bookshelf.R;
 
 /**
  * Created by Renan on 10/12/2016.
@@ -11,7 +11,7 @@ public class Book {
     private Long id;
     private String name;
     private Integer pages;
-    private int image = R.drawable.generic_book;       //change later
+    private int image;       //change later
 
     //Constructors
     public Book() {}

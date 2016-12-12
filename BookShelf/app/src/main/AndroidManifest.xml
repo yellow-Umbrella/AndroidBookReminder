@@ -3,6 +3,7 @@
     package="br.com.renandias.bookshelf">
 
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
     <!-- Permision by user to use alarms -->
     <application
