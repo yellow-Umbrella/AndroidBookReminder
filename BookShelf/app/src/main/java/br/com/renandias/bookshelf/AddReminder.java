@@ -139,7 +139,7 @@ public class AddReminder extends AppCompatActivity {
                     PendingIntent.getBroadcast(this, 1, alertIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT));
 
-            Reminder rem = new Reminder(new Long(33), new Long(1), "quando eu quiser");
+            Reminder rem = new Reminder(new Long(33), new Long(1), "quando eu quiser");     //Fix it
             DataBase db = new DataBase(this);
             db.saveReminder(rem);
 
