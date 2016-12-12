@@ -32,15 +32,6 @@
         app:backgroundTint="?attr/actionModeSplitBackground" />
 
     <Button
-        android:text="Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/book_name"
-        android:layout_alignEnd="@+id/book_name"
-        android:layout_marginTop="58dp"
-        android:id="@+id/show_date" />
-
-    <Button
         android:text="Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,5 +39,14 @@
         android:layout_alignStart="@+id/show_date"
         android:layout_marginTop="38dp"
         android:id="@+id/show_time" />
+
+    <Button
+        android:text="Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:id="@+id/show_date"
+        android:layout_below="@+id/book_name"
+        android:layout_toStartOf="@+id/save_reminder" />
 
 </RelativeLayout>

@@ -115,11 +115,11 @@ public class AddReminder extends AppCompatActivity {
 
         long timeMill = 0;
 
-        Log.i("YEAR", year_x + "");
-        Log.i("MONTH", month_x + "");
-        Log.i("DAY", day_x + "");
-        Log.i("HOUR", hour_x + "");
-        Log.i("MINUTE", minute_x + "");
+//        Log.i("YEAR", year_x + "");
+//        Log.i("MONTH", month_x + "");
+//        Log.i("DAY", day_x + "");
+//        Log.i("HOUR", hour_x + "");
+//        Log.i("MINUTE", minute_x + "");
 
         if(datePicked == true && timePicked == true)
             timeMill = dato2Mill(year_x, month_x, day_x, hour_x, minute_x);
@@ -128,9 +128,7 @@ public class AddReminder extends AppCompatActivity {
         else
             Toast.makeText(this, "Select a Time", Toast.LENGTH_SHORT).show();
 
-        //Long alertTime = new Date().getTime()+timeMill;
         Long alertTime = timeMill;
-        //Long alertTime = Calendar.getInstance().getTimeInMillis() + 5*1000;
 
         Intent alertIntent = new Intent(this, AlertReceiver.class);
         alertIntent.putExtra("bookName", bookNameText.getText().toString());
@@ -145,11 +143,10 @@ public class AddReminder extends AppCompatActivity {
         DataBase db = new DataBase(this);
         db.saveReminder(rem);
 
-        long log1 = Calendar.getInstance().getTimeInMillis();
-        Log.i("AddReminder",log1 + "");
-        Log.i("AddReminder", timeMill + "");
-        Log.i("AddReminder", (timeMill - log1) + "");
-
+//        long log1 = Calendar.getInstance().getTimeInMillis();
+//        Log.i("AddReminder",log1 + "");
+//        Log.i("AddReminder", timeMill + "");
+//        Log.i("AddReminder", (timeMill - log1) + "");
 
         Toast.makeText(this, "New Reminder", Toast.LENGTH_SHORT).show();
 

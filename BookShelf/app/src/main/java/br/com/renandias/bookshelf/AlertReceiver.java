@@ -17,7 +17,9 @@ public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        createNotification(context, "Times up", "5 seconds has passed", "Alert");
+        Bundle bundle = intent.getExtras();
+        String bookName = bundle.getString("bookName");
+        createNotification(context, "BookShelf Alarm", "Read " + bookName, "BookShelf Alarm");
 
     }
 
