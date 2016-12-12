@@ -31,6 +31,10 @@ public class AddReminder extends AppCompatActivity {
 
     @Bind(R.id.book_name)
     TextView bookNameText;
+    @Bind(R.id.reminder_date)
+    TextView reminderDate;
+    @Bind(R.id.reminder_time)
+    TextView reminderTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +55,15 @@ public class AddReminder extends AppCompatActivity {
 
         hour_x = cal.get(cal.HOUR_OF_DAY);
         minute_x = cal.get(cal.MINUTE);
+
+        reminderDate.setText(day_x + "/" + (month_x+1) + "/" + year_x);
     }
 
-    //Time Picker
+    //Set Reminder
+    private boolean datePicked = false;
+    private boolean timePicked = false;
 
+    //Time Picker
     private final int DIALOG_ID_TIME = 0;
     private int hour_x, minute_x;
 
@@ -68,6 +77,12 @@ public class AddReminder extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             hour_x = hourOfDay;
             minute_x = minute;
+
+            if(minute_x >= 10)
+                reminderTime.setText(hour_x + ":" + minute_x);
+            else
+                reminderTime.setText(hour_x + ":0" + minute_x);
+
             Toast.makeText(AddReminder.this, "" + hour_x + " " + minute_x, Toast.LENGTH_SHORT).show();
             timePicked = true;
         }
@@ -98,57 +113,42 @@ public class AddReminder extends AppCompatActivity {
             year_x = year;
             month_x = monthOfYear;
             day_x = dayOfMonth;
+
+            reminderDate.setText(day_x + "/" + (month_x+1) + "/" + year_x);
+
             Toast.makeText(AddReminder.this, "" + year_x + " " + month_x + " " + day_x, Toast.LENGTH_SHORT).show();
             datePicked = true;
         }
     };
     //
 
-
-    //Set Reminder
-    private boolean datePicked = false;
-    private boolean timePicked = false;
-
-
     @OnClick(R.id.save_reminder)
     public void saveReminder5() {
 
         long timeMill = 0;
 
-//        Log.i("YEAR", year_x + "");
-//        Log.i("MONTH", month_x + "");
-//        Log.i("DAY", day_x + "");
-//        Log.i("HOUR", hour_x + "");
-//        Log.i("MINUTE", minute_x + "");
-
-        if(datePicked == true && timePicked == true)
+        if(datePicked == true && timePicked == true) {
             timeMill = dato2Mill(year_x, month_x, day_x, hour_x, minute_x);
+
+            Intent alertIntent = new Intent(this, AlertReceiver.class);
+            alertIntent.putExtra("bookName", bookNameText.getText().toString());
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, timeMill,
+                    PendingIntent.getBroadcast(this, 1, alertIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT));
+
+            Reminder rem = new Reminder(new Long(33), new Long(1), "quando eu quiser");
+            DataBase db = new DataBase(this);
+            db.saveReminder(rem);
+
+            Toast.makeText(this, "New Reminder", Toast.LENGTH_SHORT).show();
+        }
         else if(datePicked == false)
             Toast.makeText(this, "Select a date", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this, "Select a Time", Toast.LENGTH_SHORT).show();
-
-        Long alertTime = timeMill;
-
-        Intent alertIntent = new Intent(this, AlertReceiver.class);
-        alertIntent.putExtra("bookName", bookNameText.getText().toString());
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime,
-                PendingIntent.getBroadcast(this, 1, alertIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT));
-
-        Reminder rem = new Reminder(new Long(33), new Long(1), "quando eu quiser");
-        DataBase db = new DataBase(this);
-        db.saveReminder(rem);
-
-//        long log1 = Calendar.getInstance().getTimeInMillis();
-//        Log.i("AddReminder",log1 + "");
-//        Log.i("AddReminder", timeMill + "");
-//        Log.i("AddReminder", (timeMill - log1) + "");
-
-        Toast.makeText(this, "New Reminder", Toast.LENGTH_SHORT).show();
 
     }
 

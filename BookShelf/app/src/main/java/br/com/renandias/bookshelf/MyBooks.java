@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.renandias.bookshelf.DataBase.BookDataBase;
 import br.com.renandias.bookshelf.DataBase.DataBase;
+import br.com.renandias.bookshelf.adapter.BookAdapter;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,13 +32,9 @@ public class MyBooks extends AppCompatActivity {
         DataBase db = new DataBase(this);
 
         List<Book> list = db.getAllBooks();
-        String names[] = new String[list.size()];
 
-        int i = 0;
-        for(Book x: list)
-            names[i++] = x.getName();
+        BookAdapter adapter = new BookAdapter(this, list);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
         viewList.setAdapter(adapter);
     }
 
@@ -46,7 +43,8 @@ public class MyBooks extends AppCompatActivity {
 
         Intent goAddReminder = new Intent(this, AddReminder.class);
 
-        String name = (String) parent.getAdapter().getItem(position); // don't know if it works  //It does!!
+        Book book = (Book) parent.getAdapter().getItem(position); // don't know if it works  //It does!!
+        String name = book.getName();
         goAddReminder.putExtra("bookName", name);
         startActivity(goAddReminder);
 

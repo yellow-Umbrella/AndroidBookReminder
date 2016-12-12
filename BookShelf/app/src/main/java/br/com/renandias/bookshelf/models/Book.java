@@ -1,5 +1,7 @@
 package br.com.renandias.bookshelf.models;
 
+import br.com.renandias.bookshelf.R;
+
 /**
  * Created by Renan on 10/12/2016.
  */
@@ -9,6 +11,7 @@ public class Book {
     private Long id;
     private String name;
     private Integer pages;
+    private int image = R.drawable.generic_book;       //change later
 
     //Constructors
     public Book() {}
@@ -47,6 +50,14 @@ public class Book {
 
     public void setPages(Integer pages) {
         this.pages = pages;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     @Override
