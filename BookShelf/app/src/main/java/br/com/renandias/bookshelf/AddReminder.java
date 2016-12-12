@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -47,6 +48,9 @@ public class AddReminder extends AppCompatActivity {
         year_x = cal.get(cal.YEAR);
         month_x = cal.get(cal.MONTH);
         day_x = cal.get(cal.DAY_OF_MONTH);
+
+        hour_x = cal.get(cal.HOUR_OF_DAY);
+        minute_x = cal.get(cal.MINUTE);
     }
 
     //Time Picker
@@ -65,6 +69,7 @@ public class AddReminder extends AppCompatActivity {
             hour_x = hourOfDay;
             minute_x = minute;
             Toast.makeText(AddReminder.this, "" + hour_x + " " + minute_x, Toast.LENGTH_SHORT).show();
+            timePicked = true;
         }
     };
 
@@ -91,20 +96,41 @@ public class AddReminder extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             year_x = year;
-            month_x = monthOfYear + 1;
+            month_x = monthOfYear;
             day_x = dayOfMonth;
             Toast.makeText(AddReminder.this, "" + year_x + " " + month_x + " " + day_x, Toast.LENGTH_SHORT).show();
+            datePicked = true;
         }
     };
     //
 
+
+    //Set Reminder
+    private boolean datePicked = false;
+    private boolean timePicked = false;
+
+
     @OnClick(R.id.save_reminder)
     public void saveReminder5() {
 
-        int hour;
-        int minute;
+        long timeMill = 0;
 
-        Long alertTime = new Date().getTime()+30*1000;
+        Log.i("YEAR", year_x + "");
+        Log.i("MONTH", month_x + "");
+        Log.i("DAY", day_x + "");
+        Log.i("HOUR", hour_x + "");
+        Log.i("MINUTE", minute_x + "");
+
+        if(datePicked == true && timePicked == true)
+            timeMill = dato2Mill(year_x, month_x, day_x, hour_x, minute_x);
+        else if(datePicked == false)
+            Toast.makeText(this, "Select a date", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, "Select a Time", Toast.LENGTH_SHORT).show();
+
+        //Long alertTime = new Date().getTime()+timeMill;
+        Long alertTime = timeMill;
+        //Long alertTime = Calendar.getInstance().getTimeInMillis() + 5*1000;
 
         Intent alertIntent = new Intent(this, AlertReceiver.class);
         alertIntent.putExtra("bookName", bookNameText.getText().toString());
@@ -119,9 +145,19 @@ public class AddReminder extends AppCompatActivity {
         DataBase db = new DataBase(this);
         db.saveReminder(rem);
 
+        long log1 = Calendar.getInstance().getTimeInMillis();
+        Log.i("AddReminder",log1 + "");
+        Log.i("AddReminder", timeMill + "");
+        Log.i("AddReminder", (timeMill - log1) + "");
+
+
         Toast.makeText(this, "New Reminder", Toast.LENGTH_SHORT).show();
 
-        //add reminder to the data base!!
+    }
 
+    private long dato2Mill(int year, int month, int day, int hour, int minute) {
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, day, hour, minute, 0);
+        return c.getTimeInMillis();
     }
 }
