@@ -4,17 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.List;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
+import br.com.renandias.bookshelf.activities.CheckReminder;
 import br.com.renandias.bookshelf.adapter.ReminderAdapter;
 import br.com.renandias.bookshelf.models.Reminder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 /**
  * Activity que gerencia a tela que mostra os lembretes dos usuarios.
@@ -39,6 +42,22 @@ public class MyReminders extends AppCompatActivity {
 
         ReminderAdapter adapter = new ReminderAdapter(this, list);
         viewList.setAdapter(adapter);
+    }
+
+    @OnItemClick(R.id.all_reminders_listView)
+    public void onItemClick(AdapterView<?> parent, int position) {
+        Intent goCheckReminder = new Intent(this, CheckReminder.class);
+
+        Reminder reminder = (Reminder) parent.getAdapter().getItem(position);
+        String bookName = reminder.getBookName();
+        String date = reminder.getDate();
+        Long id = reminder.getId();
+
+        goCheckReminder.putExtra("bookName", bookName);
+        goCheckReminder.putExtra("date", date);
+        goCheckReminder.putExtra("id", id);
+
+        startActivity(goCheckReminder);
     }
 
     /**

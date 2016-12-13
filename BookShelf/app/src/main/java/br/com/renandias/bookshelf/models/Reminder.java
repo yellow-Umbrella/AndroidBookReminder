@@ -12,7 +12,7 @@ public class Reminder {
 
     //Atributos
     private Long id;
-    private Long notifID;
+    private Integer notifID;
     private Long bookId;
     private String bookName;
     private String date;
@@ -20,14 +20,14 @@ public class Reminder {
     //Constructors
     public Reminder() {}
 
-    public Reminder(Long notifId, Long bookId, String bookName, String date) {
+    public Reminder(Integer notifId, Long bookId, String bookName, String date) {
         this.notifID = notifId;
         this.bookId = bookId;
         this.bookName = bookName;
         this.date = date;
     }
 
-    public Reminder(Long id, Long notifID, Long bookId, String bookName, String date) {
+    public Reminder(Long id, Integer notifID, Long bookId, String bookName, String date) {
         this.id = id;
         this.notifID = notifID;
         this.bookId = bookId;
@@ -44,11 +44,11 @@ public class Reminder {
         this.id = id;
     }
 
-    public Long getNotifID() {
+    public Integer getNotifID() {
         return notifID;
     }
 
-    public void setNotifID(Long notifID) {
+    public void setNotifID(Integer notifID) {
         this.notifID = notifID;
     }
 

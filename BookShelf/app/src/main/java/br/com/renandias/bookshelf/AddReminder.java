@@ -137,9 +137,11 @@ public class AddReminder extends AppCompatActivity {
         if(datePicked == true && timePicked == true) {
 
             timeMill = dato2Mill(year_x, month_x, day_x, hour_x, minute_x);
+            String date = day_x + "/" + month_x + "/" + year_x + " " + hour_x + ":" + minute_x;
 
             Intent alertIntent = new Intent(this, AlertReceiver.class);
             alertIntent.putExtra("bookName", bookNameText.getText().toString());
+            alertIntent.putExtra("notif_id", date.hashCode());    //notification id
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -147,8 +149,8 @@ public class AddReminder extends AppCompatActivity {
                     PendingIntent.getBroadcast(this, 1, alertIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT));
 
-            String date = day_x + "/" + month_x + "/" + year_x + " " + hour_x + ":" + minute_x;
-            Reminder rem = new Reminder((long)date.hashCode(), bookId, bookNameText.getText().toString(), date);
+
+            Reminder rem = new Reminder(date.hashCode(), bookId, bookNameText.getText().toString(), date);
             DataBase db = new DataBase(this);
             db.saveReminder(rem);
 

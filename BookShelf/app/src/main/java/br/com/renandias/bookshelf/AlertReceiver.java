@@ -21,7 +21,8 @@ public class AlertReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         String bookName = bundle.getString("bookName");
-        createNotification(context, "BookShelf Alarm", "Read " + bookName, "BookShelf Alarm");
+        Integer id = bundle.getInt("notif_id");
+        createNotification(context, "BookShelf Alarm", "Read " + bookName, "BookShelf Alarm", id);
     }
 
     /**
@@ -31,7 +32,7 @@ public class AlertReceiver extends BroadcastReceiver {
      * @param msgText
      * @param msgAlert
      */
-    public void createNotification(Context context, String msg, String msgText, String msgAlert) {
+    public void createNotification(Context context, String msg, String msgText, String msgAlert, Integer id) {
         PendingIntent notificIntent = PendingIntent.getActivities(context, 0,
                 new Intent[]{new Intent(context, MainActivity.class)}, 0);
 
@@ -46,7 +47,7 @@ public class AlertReceiver extends BroadcastReceiver {
         mBuilder.setAutoCancel(true);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1, mBuilder.build());
+        mNotificationManager.notify(id, mBuilder.build());
     }
 
 }

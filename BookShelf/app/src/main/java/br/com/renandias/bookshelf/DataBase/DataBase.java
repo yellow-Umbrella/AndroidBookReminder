@@ -140,7 +140,7 @@ public class DataBase extends SQLiteOpenHelper {
         if(cursor.moveToFirst()) {
             do {
 //
-                list.add(new Reminder(cursor.getLong(REMINDER_ID), cursor.getLong(REMINDER_NOTIF),
+                list.add(new Reminder(cursor.getLong(REMINDER_ID), cursor.getInt(REMINDER_NOTIF),
                         cursor.getLong(REMINDER_BOOK_ID), cursor.getString(REMINDER_BOOK_NAME),
                         cursor.getString(REMINDER_DATE)));
 
@@ -148,6 +148,12 @@ public class DataBase extends SQLiteOpenHelper {
         }
 
         return list;
+    }
+
+    public void deleteReminder(Long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete("reminder", "id=" + id, null);
     }
 
 }

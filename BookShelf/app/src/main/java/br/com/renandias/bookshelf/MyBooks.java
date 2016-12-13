@@ -51,6 +51,7 @@ public class MyBooks extends AppCompatActivity {
         Book book = (Book) parent.getAdapter().getItem(position);
         String name = book.getName();
         Long bookId = book.getId();
+        Integer pages = book.getPages();
         goAddReminder.putExtra("bookName", name);
         goAddReminder.putExtra("bookId", bookId);
 
