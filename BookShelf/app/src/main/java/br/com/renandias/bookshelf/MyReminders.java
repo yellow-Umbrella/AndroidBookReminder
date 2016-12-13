@@ -52,10 +52,12 @@ public class MyReminders extends AppCompatActivity {
         String bookName = reminder.getBookName();
         String date = reminder.getDate();
         Long id = reminder.getId();
+        Integer notifId = reminder.getNotifID();
 
         goCheckReminder.putExtra("bookName", bookName);
         goCheckReminder.putExtra("date", date);
         goCheckReminder.putExtra("id", id);
+        goCheckReminder.putExtra("notif_id", notifId);
 
         startActivity(goCheckReminder);
     }

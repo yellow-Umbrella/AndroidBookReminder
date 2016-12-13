@@ -1,5 +1,7 @@
 package br.com.renandias.bookshelf.activities;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
 import br.com.renandias.bookshelf.MainActivity;
+import br.com.renandias.bookshelf.MyReminders;
 import br.com.renandias.bookshelf.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +23,7 @@ public class CheckReminder extends AppCompatActivity {
     TextView remDate;
 
     private Long reminderId;
+    private Integer notifId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +36,20 @@ public class CheckReminder extends AppCompatActivity {
         remBookName.setText(extras.getString("bookName"));
         remDate.setText(extras.getString("date"));
         reminderId = extras.getLong("id");
+        notifId = extras.getInt("notif_id");
 
     }
 
     @OnClick(R.id.delete_reminder)
     public void deleteReminder() {
-        Intent goBackMain = new Intent(this, MainActivity.class);
+        Intent goBackMain = new Intent(this, MyReminders.class);
         goBackMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         DataBase db = new DataBase(this);
         db.deleteReminder(reminderId);
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notifId); //not sure if it's working
 
         startActivity(goBackMain);
     }
