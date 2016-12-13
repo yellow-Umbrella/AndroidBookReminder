@@ -6,12 +6,16 @@ import android.graphics.Bitmap;
  * Created by Renan on 10/12/2016.
  */
 
+/**
+ * Classe model de um Livro(Book) com id, nome, Quantidade de páginas e uma imagem.
+ */
 public class Book {
 
+    //Atributos
     private Long id;
     private String name;
     private Integer pages;
-    private Bitmap bitmapImage;       //change later
+    private Bitmap bitmapImage;
 
     //Constructors
     public Book() {}

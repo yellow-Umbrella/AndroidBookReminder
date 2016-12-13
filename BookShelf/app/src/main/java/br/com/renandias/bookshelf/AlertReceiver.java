@@ -12,19 +12,26 @@ import android.support.v4.app.NotificationCompat;
  * Created by Renan on 11/12/2016.
  */
 
+/**
+ * Classe que recebe os alarmes seta os mesmos.
+ */
 public class AlertReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Bundle bundle = intent.getExtras();
         String bookName = bundle.getString("bookName");
         createNotification(context, "BookShelf Alarm", "Read " + bookName, "BookShelf Alarm");
-
     }
 
+    /**
+     * Cria a notificação e seta no sistema.
+     * @param context
+     * @param msg
+     * @param msgText
+     * @param msgAlert
+     */
     public void createNotification(Context context, String msg, String msgText, String msgAlert) {
-
         PendingIntent notificIntent = PendingIntent.getActivities(context, 0,
                 new Intent[]{new Intent(context, MainActivity.class)}, 0);
 
@@ -39,9 +46,7 @@ public class AlertReceiver extends BroadcastReceiver {
         mBuilder.setAutoCancel(true);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-
         mNotificationManager.notify(1, mBuilder.build());
-
     }
 
 }

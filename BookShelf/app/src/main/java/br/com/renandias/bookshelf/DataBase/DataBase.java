@@ -16,13 +16,16 @@ import br.com.renandias.bookshelf.models.Reminder;
  * Created by Renan on 11/12/2016.
  */
 
+/**
+ * Classe que gerencia o banco de dados.
+ */
 public class DataBase extends SQLiteOpenHelper {
 
-    //Database
+    //Database info
     private static final String DATABASE_NAME = "bookshelf";
     private static final int DATABASE_VERSION = 1;
 
-    //Book model
+    //Book Model
     private static final int BOOK_ID = 0;
     private static final int BOOK_NAME = 1;
     private static final int BOOK_PAGES = 2;
@@ -32,26 +35,30 @@ public class DataBase extends SQLiteOpenHelper {
     private static final int REMINDER_ID = 0;
     private static final int REMINDER_NOTIF = 1;
     private static final int REMINDER_BOOK_ID = 2;
-    private static final int REMINDER_DATE = 3;
+    private static final int REMINDER_BOOK_NAME = 3;
+    private static final int REMINDER_DATE = 4;
 
+    //Constructor
     public DataBase(Context context) { super(context, DATABASE_NAME, null, DATABASE_VERSION); }
 
+    /**
+     * Cria o Banco de dados com as tabelas book e reminder.
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table book (id integer primary key, name text, pages integer, image_byte blob)";
         db.execSQL(sql);
-        sql = "create table reminder (id integer primary key, notif_id integer, book_id integer, reminder_date text)";
+        sql = "create table reminder (id integer primary key, notif_id integer, book_id integer, book_name text, reminder_date text)";
         db.execSQL(sql);
     }
 
-//    @Override
-//    public void onOpen(SQLiteDatabase db) {
-//        super.onOpen(db);
-//        if(!db.isReadOnly()) {
-//            db.execSQL("PRAGMA foreign_key=ON;");
-//        }
-//    }
-
+    /**
+     * Faz um update no Banco de dados.
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String sql = "drop table if exist book";
@@ -62,6 +69,10 @@ public class DataBase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Salva um book no banco de dados.
+     * @param book
+     */
     public void saveBook(Book book) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -75,8 +86,11 @@ public class DataBase extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Pega todos os 'Books' do banco de dados e retorna em uma ArrayList.
+     * @return
+     */
     public List<Book> getAllBooks() {
-
         List<Book> list = new ArrayList<>();
 
         String sql = "select * from book";
@@ -85,16 +99,18 @@ public class DataBase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()) {
-
             do {
                 list.add(new Book(cursor.getLong(BOOK_ID), cursor.getString(BOOK_NAME), cursor.getInt(BOOK_PAGES), DbBitmapUtility.getImage(cursor.getBlob(BOOK_IMAGE_BITMAP))));
             } while(cursor.moveToNext());
-
         }
 
         return list;
     }
 
+    /**
+     * Salva um 'Reminder" no banco de dados.
+     * @param reminder
+     */
     public void saveReminder(Reminder reminder) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -102,6 +118,7 @@ public class DataBase extends SQLiteOpenHelper {
         values.put("id", reminder.getId());
         values.put("notif_id", reminder.getNotifID());
         values.put("book_id", reminder.getBookId());
+        values.put("book_name", reminder.getBookName());
         values.put("reminder_date", reminder.getDate());
 
         db.insert("reminder", null, values);
@@ -109,33 +126,25 @@ public class DataBase extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Pega todos os 'Reminders' do banco de dados e retorna em uma ArrayList.
+     * @return
+     */
     public List<Reminder> getAllReminders() {
-
         List<Reminder> list = new ArrayList<>();
 
         String sql = "select * from reminder";
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery(sql, null);
-
         if(cursor.moveToFirst()) {
-
             do {
+//
+                list.add(new Reminder(cursor.getLong(REMINDER_ID), cursor.getLong(REMINDER_NOTIF),
+                        cursor.getLong(REMINDER_BOOK_ID), cursor.getString(REMINDER_BOOK_NAME),
+                        cursor.getString(REMINDER_DATE)));
 
-                sql = "select * from book where id=" + cursor.getInt(REMINDER_BOOK_ID);
-                Cursor bookCursor = db.rawQuery(sql, null);
-
-                Book book;
-
-                if(bookCursor.moveToFirst()) {                                                                                      //fix it
-                    book = new Book(cursor.getLong(BOOK_ID), cursor.getString(BOOK_NAME), cursor.getInt(BOOK_PAGES));
-                } else {
-                    book = new Book();
-                }
-
-                list.add(new Reminder(cursor.getLong(REMINDER_ID), cursor.getLong(REMINDER_NOTIF), cursor.getLong(REMINDER_BOOK_ID), cursor.getString(REMINDER_DATE)));
             }while(cursor.moveToNext());
-
         }
 
         return list;

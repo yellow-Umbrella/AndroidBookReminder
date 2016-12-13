@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.renandias.bookshelf.DataBase.DbBitmapUtility;
 import br.com.renandias.bookshelf.R;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;
@@ -19,6 +18,9 @@ import butterknife.ButterKnife;
  * Created by Renan on 12/12/2016.
  */
 
+/**
+ * Classe que define um custom adapter com imagem e nome do livro para a lista de livros.
+ */
 public class BookAdapter extends ArrayAdapter<Book> {
 
     public BookAdapter(Context context, List<Book> bookList) {
@@ -50,6 +52,9 @@ public class BookAdapter extends ArrayAdapter<Book> {
         return convertView;
     }
 
+    /**
+     * Layout da Nó da lista (onde fica o nome e a imagem)
+     */
     class ViewHolder {
 
         @Bind(R.id.book_image)

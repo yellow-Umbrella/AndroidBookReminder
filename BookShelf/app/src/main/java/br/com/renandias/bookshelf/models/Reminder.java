@@ -4,28 +4,38 @@ package br.com.renandias.bookshelf.models;
  * Created by Renan on 11/12/2016.
  */
 
+/**
+ * Classe model de um Lembrete(Reminder) com id, id da notificação, id do livro, nome do livro e
+ * data da notificação.
+ */
 public class Reminder {
 
+    //Atributos
     private Long id;
     private Long notifID;
     private Long bookId;
+    private String bookName;
     private String date;
 
+    //Constructors
     public Reminder() {}
 
-    public Reminder(Long notifId, Long bookId, String date) {
+    public Reminder(Long notifId, Long bookId, String bookName, String date) {
         this.notifID = notifId;
         this.bookId = bookId;
+        this.bookName = bookName;
         this.date = date;
     }
 
-    public Reminder(Long id, Long notifID, Long bookId, String date) {
+    public Reminder(Long id, Long notifID, Long bookId, String bookName, String date) {
         this.id = id;
         this.notifID = notifID;
         this.bookId = bookId;
+        this.bookName = bookName;
         this.date = date;
     }
 
+    //Getters and Setters
     public Long getId() {
         return id;
     }
@@ -58,4 +68,11 @@ public class Reminder {
         this.date = date;
     }
 
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 }

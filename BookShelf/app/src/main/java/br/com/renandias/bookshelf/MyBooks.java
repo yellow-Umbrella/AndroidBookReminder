@@ -15,8 +15,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
+/**
+ * Activity que gerencia a tela que mostra os livros cadastrados do usuario.
+ */
 public class MyBooks extends AppCompatActivity {
 
+    //Binding da ListView
     @Bind(R.id.my_books)
     ListView viewList;
 
@@ -35,16 +39,22 @@ public class MyBooks extends AppCompatActivity {
         viewList.setAdapter(adapter);
     }
 
+    /**
+     * Método que leva usuario para criar um lembrete do livro selecionado.
+     * @param parent
+     * @param position
+     */
     @OnItemClick(R.id.my_books)
     public void onTtemClick(AdapterView<?> parent, int position) {
-
         Intent goAddReminder = new Intent(this, AddReminder.class);
 
-        Book book = (Book) parent.getAdapter().getItem(position); // don't know if it works  //It does!!
+        Book book = (Book) parent.getAdapter().getItem(position);
         String name = book.getName();
+        Long bookId = book.getId();
         goAddReminder.putExtra("bookName", name);
-        startActivity(goAddReminder);
+        goAddReminder.putExtra("bookId", bookId);
 
+        startActivity(goAddReminder);
     }
 
 

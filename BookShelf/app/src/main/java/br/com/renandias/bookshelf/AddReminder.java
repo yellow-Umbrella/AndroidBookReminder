@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -22,14 +23,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Classe que gerencia a tela de adicionar um reminder.
+ */
 public class AddReminder extends AppCompatActivity {
 
+    //Binding dos views na tela.
     @Bind(R.id.book_name)
     TextView bookNameText;
     @Bind(R.id.reminder_date)
     TextView reminderDate;
     @Bind(R.id.reminder_time)
     TextView reminderTime;
+
+    private Calendar cal;
+    private Long bookId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +47,16 @@ public class AddReminder extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String bookName = extras.getString("bookName");
-
         bookNameText.setText(bookName);
+        bookId = extras.getLong("bookId");
 
-        // Date picker
-        final Calendar cal = Calendar.getInstance();
+        //Date picker
+        /*final Calendar*/ cal = Calendar.getInstance();
         year_x = cal.get(cal.YEAR);
         month_x = cal.get(cal.MONTH);
         day_x = cal.get(cal.DAY_OF_MONTH);
 
+        //Time picker
         hour_x = cal.get(cal.HOUR_OF_DAY);
         minute_x = cal.get(cal.MINUTE);
 
@@ -117,12 +126,16 @@ public class AddReminder extends AppCompatActivity {
     };
     //
 
+    //Kinda Works
+    /**
+     *Seta o reminder na hora e data selecionada.
+     */
     @OnClick(R.id.save_reminder)
     public void saveReminder5() {
-
         long timeMill = 0;
 
         if(datePicked == true && timePicked == true) {
+
             timeMill = dato2Mill(year_x, month_x, day_x, hour_x, minute_x);
 
             Intent alertIntent = new Intent(this, AlertReceiver.class);
@@ -134,23 +147,40 @@ public class AddReminder extends AppCompatActivity {
                     PendingIntent.getBroadcast(this, 1, alertIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT));
 
-            Reminder rem = new Reminder(new Long(33), new Long(1), "quando eu quiser");     //Fix it
+            String date = day_x + "/" + month_x + "/" + year_x + " " + hour_x + ":" + minute_x;
+            Reminder rem = new Reminder((long)date.hashCode(), bookId, bookNameText.getText().toString(), date);
             DataBase db = new DataBase(this);
             db.saveReminder(rem);
 
             Toast.makeText(this, "New Reminder", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, MyReminders.class);
+            startActivity(intent);
         }
         else if(datePicked == false)
             Toast.makeText(this, "Select a date", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this, "Select a Time", Toast.LENGTH_SHORT).show();
 
+        long x = Calendar.getInstance().getTimeInMillis();
+        Log.i("Time Set", timeMill + "");
+        Log.i("Time Now", x + "");
+        Log.i("TimeSet - TimeNow", (timeMill - x) + "");
     }
 
+    /**
+     * Método que retorna ano, mes, dia hora e minuto inserido em milisegundo.
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @return
+     */
     private long dato2Mill(int year, int month, int day, int hour, int minute) {
-        Calendar c = Calendar.getInstance();
-        c.set(year, month, day, hour, minute, 0);
-        return c.getTimeInMillis();
+        //Calendar c = Calendar.getInstance();
+        cal.set(year, month, day, hour, minute, 0);
+        return cal.getTimeInMillis();
     }
 
 }

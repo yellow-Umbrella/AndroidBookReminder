@@ -9,6 +9,10 @@ import java.io.ByteArrayOutputStream;
  * Created by Renan on 13/12/2016.
  */
 
+/**
+ * Classe utilitária para converter Bitmaps(Imagens) em Arrays de bytes e para converter
+ * Arrays de bytes em Bitmaps(Imagens).
+ */
 public class DbBitmapUtility {
 
     /**
