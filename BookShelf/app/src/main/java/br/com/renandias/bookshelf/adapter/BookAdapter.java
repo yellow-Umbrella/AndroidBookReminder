@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.renandias.bookshelf.DataBase.DbBitmapUtility;
 import br.com.renandias.bookshelf.R;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;
@@ -43,7 +44,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
         Book book = getItem(position);
         if(book != null) {
             holder.name.setText(book.getName());
-            holder.image.setImageResource(book.getImage());
+            holder.image.setImageBitmap(book.getBitmapImage());
         }
 
         return convertView;

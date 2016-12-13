@@ -26,6 +26,7 @@ public class DataBase extends SQLiteOpenHelper {
     private static final int BOOK_ID = 0;
     private static final int BOOK_NAME = 1;
     private static final int BOOK_PAGES = 2;
+    private static final int BOOK_IMAGE_BITMAP = 3;
 
     //Reminder Model
     private static final int REMINDER_ID = 0;
@@ -37,7 +38,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table book (id integer primary key, name text, pages integer)";
+        String sql = "create table book (id integer primary key, name text, pages integer, image_byte blob)";
         db.execSQL(sql);
         sql = "create table reminder (id integer primary key, notif_id integer, book_id integer, reminder_date text)";
         db.execSQL(sql);
@@ -67,6 +68,7 @@ public class DataBase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("name", book.getName());
         values.put("pages", book.getPages());
+        values.put("image_byte", DbBitmapUtility.getBytes(book.getBitmapImage()));
 
         db.insert("book", null, values);
 
@@ -85,7 +87,7 @@ public class DataBase extends SQLiteOpenHelper {
         if(cursor.moveToFirst()) {
 
             do {
-                list.add(new Book(cursor.getLong(BOOK_ID), cursor.getString(BOOK_NAME), cursor.getInt(BOOK_PAGES)));
+                list.add(new Book(cursor.getLong(BOOK_ID), cursor.getString(BOOK_NAME), cursor.getInt(BOOK_PAGES), DbBitmapUtility.getImage(cursor.getBlob(BOOK_IMAGE_BITMAP))));
             } while(cursor.moveToNext());
 
         }

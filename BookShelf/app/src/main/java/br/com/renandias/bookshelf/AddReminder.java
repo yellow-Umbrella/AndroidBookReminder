@@ -7,21 +7,16 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
-import br.com.renandias.bookshelf.models.Book;
 import br.com.renandias.bookshelf.models.Reminder;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -157,4 +152,5 @@ public class AddReminder extends AppCompatActivity {
         c.set(year, month, day, hour, minute, 0);
         return c.getTimeInMillis();
     }
+
 }

@@ -1,6 +1,6 @@
 package br.com.renandias.bookshelf.models;
 
-//import br.com.renandias.bookshelf.R;
+import android.graphics.Bitmap;
 
 /**
  * Created by Renan on 10/12/2016.
@@ -11,20 +11,28 @@ public class Book {
     private Long id;
     private String name;
     private Integer pages;
-    private int image;       //change later
+    private Bitmap bitmapImage;       //change later
 
     //Constructors
     public Book() {}
 
-    public Book(String name, Integer pages) {
+    public Book(String name, Integer pages, Bitmap bitmapImage) {
         this.name = name;
         this.pages = pages;
+        this.bitmapImage = bitmapImage;
     }
 
     public Book(Long id, String name, Integer pages) {
         this.id = id;
         this.name = name;
         this.pages = pages;
+    }
+
+    public Book(Long id, String name, Integer pages, Bitmap bitmapImage) {
+        this.id = id;
+        this.name = name;
+        this.pages = pages;
+        this.bitmapImage = bitmapImage;
     }
 
     //Getters and Setters
@@ -52,17 +60,11 @@ public class Book {
         this.pages = pages;
     }
 
-    public int getImage() {
-        return image;
+    public Bitmap getBitmapImage() {
+        return bitmapImage;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setBitmapImage(Bitmap bitmapImage) {
+        this.bitmapImage = bitmapImage;
     }
-
-    @Override
-    public String toString() {
-        return id + " " + name + " " + pages;
-    }
-
 }

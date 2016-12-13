@@ -6,11 +6,12 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import br.com.renandias.bookshelf.DataBase.BookDataBase;
 import br.com.renandias.bookshelf.DataBase.DataBase;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;
@@ -23,8 +24,10 @@ public class AddBook extends AppCompatActivity {
     EditText bookName;
     @Bind(R.id.pages)
     EditText bookPages;
-    @Bind(R.id.image_button_book)
-    ImageButton imageButtonBook;
+    @Bind(R.id.book_image_view)
+    ImageView imageView;
+    @Bind(R.id.take_pic)
+    Button takePic;
 
     static final int REQUEST_IMAGE_CAMERA = 1;
 
@@ -35,7 +38,8 @@ public class AddBook extends AppCompatActivity {
         ButterKnife.bind(this);
 
         if(!hasCamera()) {
-            imageButtonBook.setEnabled(false);
+            imageView.setEnabled(false);
+            takePic.setEnabled(false);
         }
     }
 
@@ -44,6 +48,9 @@ public class AddBook extends AppCompatActivity {
 
         String name = bookName.getText().toString();
         Integer pages;
+        imageView.buildDrawingCache();
+        Bitmap photo = imageView.getDrawingCache();
+
         try {
             pages = Integer.valueOf(bookPages.getText().toString());
         } catch(NumberFormatException exception) {
@@ -53,17 +60,17 @@ public class AddBook extends AppCompatActivity {
         if(!name.isEmpty() && pages != null) {
 
             DataBase db = new DataBase(this);
-            db.saveBook(new Book(name, pages));
+            db.saveBook(new Book(name, pages, photo));
 
             Toast.makeText(this, "Book Saved", Toast.LENGTH_SHORT).show();
 
-        } else {
+        } else
             Toast.makeText(this, "Missing data", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
-    @OnClick(R.id.image_button_book)
+    //Camera
+    @OnClick(R.id.take_pic)
     public void takePicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -75,7 +82,7 @@ public class AddBook extends AppCompatActivity {
         if(requestCode == REQUEST_IMAGE_CAMERA && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap photo = (Bitmap) extras.get("data");
-            imageButtonBook.setImageBitmap(photo);
+            imageView.setImageBitmap(photo);
         }
     }
 
