@@ -89,7 +89,7 @@ public class AddReminder extends AppCompatActivity {
             else
                 reminderTime.setText(hour_x + ":0" + minute_x);
 
-            Toast.makeText(AddReminder.this, "" + hour_x + " " + minute_x, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(AddReminder.this, "" + hour_x + " " + minute_x, Toast.LENGTH_SHORT).show();
             timePicked = true;
         }
     };
@@ -122,7 +122,7 @@ public class AddReminder extends AppCompatActivity {
 
             reminderDate.setText(day_x + "/" + (month_x+1) + "/" + year_x);
 
-            Toast.makeText(AddReminder.this, "" + year_x + " " + month_x + " " + day_x, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(AddReminder.this, "" + year_x + " " + month_x + " " + day_x, Toast.LENGTH_SHORT).show();
             datePicked = true;
         }
     };
@@ -139,7 +139,12 @@ public class AddReminder extends AppCompatActivity {
         if(datePicked == true && timePicked == true) {
 
             timeMill = dato2Mill(year_x, month_x, day_x, hour_x, minute_x);
-            String date = day_x + "/" + month_x + "/" + year_x + " " + hour_x + ":" + minute_x;
+            String date;
+            if(minute_x > 10)
+                date = day_x + "/" + month_x + "/" + year_x + " " + hour_x + ":" + minute_x;
+            else
+                date = day_x + "/" + month_x + "/" + year_x + " " + hour_x + ":"  + "0" + minute_x;
+
 
             Intent alertIntent = new Intent(this, AlertReceiver.class);
             alertIntent.putExtra("bookName", bookNameText.getText().toString());
@@ -167,10 +172,10 @@ public class AddReminder extends AppCompatActivity {
         else
             Toast.makeText(this, "Select a Time", Toast.LENGTH_SHORT).show();
 
-        long x = Calendar.getInstance().getTimeInMillis();
-        Log.i("Time Set", timeMill + "");
-        Log.i("Time Now", x + "");
-        Log.i("TimeSet - TimeNow", (timeMill - x) + "");
+//        long x = Calendar.getInstance().getTimeInMillis();
+//        Log.i("Time Set", timeMill + "");
+//        Log.i("Time Now", x + "");
+//        Log.i("TimeSet - TimeNow", (timeMill - x) + "");
     }
 
     /**
