@@ -2,14 +2,15 @@ package br.com.renandias.bookshelf.activities;
 
 import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import br.com.renandias.bookshelf.AlertReceiver;
 import br.com.renandias.bookshelf.DataBase.DataBase;
-import br.com.renandias.bookshelf.MainActivity;
 import br.com.renandias.bookshelf.MyReminders;
 import br.com.renandias.bookshelf.R;
 import butterknife.Bind;
@@ -49,7 +50,15 @@ public class CheckReminder extends AppCompatActivity {
         DataBase db = new DataBase(this);
         db.deleteReminder(reminderId);
 
-        AlarmManager alert = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Context context = getApplicationContext();
+
+        NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        manager.cancel(notifId);
+
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notifId, intent, 0);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
 
 
         startActivity(goBackMyReminders);

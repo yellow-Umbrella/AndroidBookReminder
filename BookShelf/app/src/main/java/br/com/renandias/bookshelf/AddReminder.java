@@ -146,7 +146,7 @@ public class AddReminder extends AppCompatActivity {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, timeMill,
-                    PendingIntent.getBroadcast(this, 1, alertIntent,
+                    PendingIntent.getBroadcast(this, date.hashCode(), alertIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT));
 
 
