@@ -68,6 +68,13 @@ public class AddBook extends AppCompatActivity {
             db.saveBook(new Book(name, pages, photo));
 
             Toast.makeText(this, "Book Saved", Toast.LENGTH_SHORT).show();
+
+            //goMyBooks
+            Intent intent = new Intent(this, MyBooks.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+
         }
         else
             Toast.makeText(this, "Missing data", Toast.LENGTH_SHORT).show();

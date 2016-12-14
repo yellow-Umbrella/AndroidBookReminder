@@ -1,5 +1,6 @@
 package br.com.renandias.bookshelf.activities;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -42,16 +43,16 @@ public class CheckReminder extends AppCompatActivity {
 
     @OnClick(R.id.delete_reminder)
     public void deleteReminder() {
-        Intent goBackMain = new Intent(this, MyReminders.class);
-        goBackMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent goBackMyReminders = new Intent(this, MyReminders.class);
+        goBackMyReminders.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         DataBase db = new DataBase(this);
         db.deleteReminder(reminderId);
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(notifId); //not sure if it's working
+        AlarmManager alert = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        startActivity(goBackMain);
+
+        startActivity(goBackMyReminders);
     }
 
 

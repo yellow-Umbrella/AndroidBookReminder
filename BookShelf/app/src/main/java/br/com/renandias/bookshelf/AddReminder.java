@@ -158,6 +158,7 @@ public class AddReminder extends AppCompatActivity {
 
             Intent intent = new Intent(this, MyReminders.class);
             startActivity(intent);
+
         }
         else if(datePicked == false)
             Toast.makeText(this, "Select a date", Toast.LENGTH_SHORT).show();
