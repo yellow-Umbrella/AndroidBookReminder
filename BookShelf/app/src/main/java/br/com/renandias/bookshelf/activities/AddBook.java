@@ -1,4 +1,4 @@
-package br.com.renandias.bookshelf;
+package br.com.renandias.bookshelf.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
+import br.com.renandias.bookshelf.R;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;
 import butterknife.ButterKnife;

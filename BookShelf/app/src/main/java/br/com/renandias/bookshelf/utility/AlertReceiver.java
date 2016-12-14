@@ -1,4 +1,4 @@
-package br.com.renandias.bookshelf;
+package br.com.renandias.bookshelf.utility;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+
+import br.com.renandias.bookshelf.R;
+import br.com.renandias.bookshelf.activities.MainActivity;
 
 /**
  * Created by Renan on 11/12/2016.

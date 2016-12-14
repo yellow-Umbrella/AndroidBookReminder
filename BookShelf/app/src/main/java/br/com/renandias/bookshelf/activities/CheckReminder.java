@@ -9,9 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import br.com.renandias.bookshelf.AlertReceiver;
+import br.com.renandias.bookshelf.utility.AlertReceiver;
 import br.com.renandias.bookshelf.DataBase.DataBase;
-import br.com.renandias.bookshelf.MyReminders;
 import br.com.renandias.bookshelf.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;

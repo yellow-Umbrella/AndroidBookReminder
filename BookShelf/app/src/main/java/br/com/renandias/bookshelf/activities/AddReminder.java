@@ -1,4 +1,4 @@
-package br.com.renandias.bookshelf;
+package br.com.renandias.bookshelf.activities;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import br.com.renandias.bookshelf.utility.AlertReceiver;
 import br.com.renandias.bookshelf.DataBase.DataBase;
+import br.com.renandias.bookshelf.R;
 import br.com.renandias.bookshelf.models.Reminder;
 import butterknife.Bind;
 import butterknife.ButterKnife;

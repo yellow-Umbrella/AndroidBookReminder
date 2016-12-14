@@ -1,4 +1,4 @@
-package br.com.renandias.bookshelf;
+package br.com.renandias.bookshelf.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,8 @@ import android.widget.ListView;
 import java.util.List;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
+import br.com.renandias.bookshelf.R;
+import br.com.renandias.bookshelf.activities.AddReminder;
 import br.com.renandias.bookshelf.adapter.BookAdapter;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;

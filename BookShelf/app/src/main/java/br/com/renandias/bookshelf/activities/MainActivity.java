@@ -1,9 +1,10 @@
-package br.com.renandias.bookshelf;
+package br.com.renandias.bookshelf.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import br.com.renandias.bookshelf.R;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 

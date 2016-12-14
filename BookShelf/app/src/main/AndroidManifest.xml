@@ -15,22 +15,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyBooks" />
-        <activity android:name=".AddBook" />
+        <activity android:name=".activities.MyBooks" />
+        <activity android:name=".activities.AddBook" />
         <activity
-            android:name=".MyReminders"
+            android:name=".activities.MyReminders"
             android:label="@string/title_activity_my_reminders"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddReminder" />
+        <activity android:name=".activities.AddReminder" />
 
-        <receiver android:name=".AlertReceiver" />
+        <receiver android:name=".utility.AlertReceiver" />
 
         <activity android:name=".activities.CheckReminder"></activity>
     </application>
