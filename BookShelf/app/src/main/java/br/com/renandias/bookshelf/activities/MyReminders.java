@@ -12,9 +12,6 @@ import java.util.List;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
 import br.com.renandias.bookshelf.R;
-import br.com.renandias.bookshelf.activities.CheckReminder;
-import br.com.renandias.bookshelf.activities.MainActivity;
-import br.com.renandias.bookshelf.activities.MyBooks;
 import br.com.renandias.bookshelf.adapter.ReminderAdapter;
 import br.com.renandias.bookshelf.models.Reminder;
 import butterknife.Bind;

@@ -10,7 +10,6 @@ import java.util.List;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
 import br.com.renandias.bookshelf.R;
-import br.com.renandias.bookshelf.activities.AddReminder;
 import br.com.renandias.bookshelf.adapter.BookAdapter;
 import br.com.renandias.bookshelf.models.Book;
 import butterknife.Bind;
