@@ -1,15 +1,25 @@
 package br.com.renandias.bookshelf.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
 
 import br.com.renandias.bookshelf.DataBase.DataBase;
 import br.com.renandias.bookshelf.R;
@@ -32,8 +42,11 @@ public class AddBook extends AppCompatActivity {
     ImageView imageView;
     @Bind(R.id.take_pic)
     Button takePic;
+    @Bind(R.id.add_pic_gallery)
+    Button gallery;
 
-    static final int REQUEST_IMAGE_CAMERA = 1;
+    static final int REQUEST_IMAGE_CAMERA = 0;
+    static final int REQUEST_IMAGE_GALLEY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,12 @@ public class AddBook extends AppCompatActivity {
         if(!hasCamera()) {
             imageView.setEnabled(false);
             takePic.setEnabled(false);
+        }
+
+        if(!(Build.VERSION.SDK_INT >= 23)) {
+            imageView.setEnabled(false);
+            takePic.setEnabled(false);
+            gallery.setEnabled(false);
         }
     }
 
@@ -82,8 +101,20 @@ public class AddBook extends AppCompatActivity {
 
     }
 
-    //Camera
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @OnClick(R.id.add_pic_gallery)
+    public void goGallery() {
+
+        if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, REQUEST_IMAGE_GALLEY);
+        }
+        else
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+    }
+
+    //Camera
     /**
      * Abre a camera para tirar uma foto do livro.
      */
@@ -95,17 +126,29 @@ public class AddBook extends AppCompatActivity {
     }
 
     /**
-     * Pega a foto tirada e coloca na imageView.
+     * Pega a foto tirada e coloca na imageView ou imagem da galeria.
      * @param requestCode
      * @param resultCode
      * @param data
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if(requestCode == REQUEST_IMAGE_CAMERA && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap photo = (Bitmap) extras.get("data");
             imageView.setImageBitmap(photo);
+        }
+
+        if(requestCode == REQUEST_IMAGE_GALLEY && resultCode == RESULT_OK) {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                imageView.setImageBitmap(bitmap);
+            }catch(FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -60,4 +60,12 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/take_pic" />
 
+    <Button
+        android:text="Gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/book_image_view"
+        android:layout_alignEnd="@+id/pages"
+        android:id="@+id/add_pic_gallery" />
+
 </RelativeLayout>
